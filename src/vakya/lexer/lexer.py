@@ -16,6 +16,8 @@ class Lexer:
     """Scans Vākya source code and emits tokens."""
 
     def __init__(self, source: str, filename: str = "<anonymous>"):
+        if source.startswith("\ufeff"):
+            source = source[1:]
         self.source = source
         self.filename = filename
         self.length = len(source)

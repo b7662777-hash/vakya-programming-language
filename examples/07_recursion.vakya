@@ -1,0 +1,13 @@
+// 07_recursion.vakya — Mutual Recursion & Hoisting
+karya is_even(n: sankhya) -> boolean {
+    yadi n == 0 { pratyavartaya satya }
+    pratyavartaya is_odd(n - 1)
+}
+
+karya is_odd(n: sankhya) -> boolean {
+    yadi n == 0 { pratyavartaya asatya }
+    pratyavartaya is_even(n - 1)
+}
+
+vada("Is 8 even?", is_even(8))
+vada("Is 7 even?", is_even(7))

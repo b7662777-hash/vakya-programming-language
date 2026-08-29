@@ -1,0 +1,6 @@
+// 02_name.vakya — String Variables & Output
+chara first_name = "Arjuna"
+chara role = "Warrior"
+vada("Name:", first_name)
+vada("Role:", role)
+vada("Greeting:", "Namaste " + first_name + "!")

@@ -1,0 +1,95 @@
+(* Vākya Formal EBNF Grammar Specification (v2.0-alpha) *)
+
+program               = { statement } , EOF ;
+
+statement             = var_decl
+                      | const_decl
+                      | function_decl
+                      | if_statement
+                      | while_statement
+                      | for_each_statement
+                      | return_statement
+                      | break_statement
+                      | continue_statement
+                      | block
+                      | expression_statement ;
+
+(* Declarations *)
+var_decl              = "chara" , IDENTIFIER , [ ":" , type_annotation ] , [ "=" , expression ] ;
+const_decl            = "dhruva" , IDENTIFIER , [ ":" , type_annotation ] , "=" , expression ;
+function_decl         = "karya" , IDENTIFIER , "(" , [ parameter_list ] , ")" , [ "->" , type_annotation ] , block ;
+
+parameter_list        = parameter , { "," , parameter } , [ "," ] ;
+parameter             = IDENTIFIER , [ ":" , type_annotation ] ;
+
+type_annotation       = "sankhya" | "dashamika" | "shabda" | "boolean" | "suchi" | "naksha" | "shunya" | IDENTIFIER ;
+
+(* Control Flow Statements *)
+if_statement          = "yadi" , expression , [ "tarhi" ] , block ,
+                        { "anyatha" , "yadi" , expression , [ "tarhi" ] , block } ,
+                        [ "anyatha" , block ] ;
+
+while_statement       = "yavat" , expression , block ;
+for_each_statement    = "pratyekam" , IDENTIFIER , "madhye" , expression , block ;
+
+return_statement      = "pratyavartaya" , [ expression ] ;
+break_statement       = "virama" ;
+continue_statement    = "agaccha" ;
+
+block                 = "{" , { statement } , "}" ;
+expression_statement  = expression ;
+
+(* Expressions (Ordered by Precedence from Lowest to Highest) *)
+expression            = assignment ;
+
+assignment            = ( IDENTIFIER | index_expression ) , assignment_operator , expression
+                      | logical_or ;
+
+assignment_operator   = "=" | "+=" | "-=" | "*=" | "/=" ;
+
+logical_or            = logical_and , { "va" , logical_and } ;
+logical_and           = equality , { "evam" , equality } ;
+
+equality              = relational , { ( "==" | "!=" ) , relational } ;
+relational            = additive , { ( "<" | "<=" | ">" | ">=" ) , additive } ;
+
+additive              = multiplicative , { ( "+" | "-" ) , multiplicative } ;
+multiplicative        = power , { ( "*" | "/" | "%" ) , power } ;
+
+(* Exponentiation is Right-Associative *)
+power                 = unary , [ "**" , power ] ;
+
+unary                 = ( "-" | "na" ) , unary
+                      | postfix ;
+
+postfix               = primary , { call_suffix | index_suffix | member_suffix } ;
+
+call_suffix           = "(" , [ argument_list ] , ")" ;
+index_suffix          = "[" , expression , "]" ;
+member_suffix         = "." , IDENTIFIER ;
+
+argument_list         = expression , { "," , expression } , [ "," ] ;
+
+primary               = INTEGER
+                      | FLOAT
+                      | STRING
+                      | "satya"
+                      | "asatya"
+                      | "shunya"
+                      | IDENTIFIER
+                      | "(" , expression , ")"
+                      | list_literal
+                      | map_literal ;
+
+list_literal          = "[" , [ expression , { "," , expression } , [ "," ] ] , "]" ;
+map_literal           = "{" , [ map_entry , { "," , map_entry } , [ "," ] ] , "}" ;
+map_entry             = ( STRING | IDENTIFIER ) , ":" , expression ;
+
+(* Lexical Tokens *)
+IDENTIFIER            = ( LETTER | "_" ) , { LETTER | DIGIT | "_" } ;
+INTEGER               = DIGIT , { DIGIT } ;
+FLOAT                 = DIGIT , { DIGIT } , "." , DIGIT , { DIGIT } ;
+STRING                = '"' , { ESCAPED_CHAR | UNESCAPED_CHAR } , '"' ;
+
+LETTER                = "a" ... "z" | "A" ... "Z" ;
+DIGIT                 = "0" ... "9" ;

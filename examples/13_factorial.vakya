@@ -1,0 +1,7 @@
+// 13_factorial.vakya — Factorial
+karya fact(n: sankhya) -> sankhya {
+    yadi n <= 1 { pratyavartaya 1 }
+    pratyavartaya n * fact(n - 1)
+}
+
+vada("Factorial(6):", fact(6))

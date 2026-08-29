@@ -5,19 +5,31 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "vakya"
 version = "0.1.0"
-description = "Vākya — A modern Romanized Sanskrit programming language"
+description = "Vākya — Romanized Sanskrit Programming Language"
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
 authors = [
     { name = "Vākya Core Team" }
 ]
-keywords = ["programming-language", "sanskrit", "interpreter", "vakya"]
+keywords = [
+    "programming-language",
+    "compiler",
+    "interpreter",
+    "virtual-machine",
+    "bytecode",
+    "sanskrit",
+    "romanized-sanskrit",
+    "memory-safety",
+    "type-system",
+    "vakya"
+]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: Education",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -27,16 +39,34 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
+gui = [
+    "Pillow>=10.0.0",
+]
 dev = [
     "pytest>=8.0.0",
     "pytest-cov>=4.1.0",
+    "Pillow>=10.0.0",
+    "pyinstaller>=6.0.0",
 ]
-repl = [
-    "prompt_toolkit>=3.0.0",
-]
+
+[project.urls]
+Homepage = "https://github.com/vakya-lang/vakya"
+Documentation = "https://github.com/vakya-lang/vakya/tree/master/docs"
+Repository = "https://github.com/vakya-lang/vakya.git"
+Issues = "https://github.com/vakya-lang/vakya/issues"
+Changelog = "https://github.com/vakya-lang/vakya/blob/master/CHANGELOG.md"
 
 [project.scripts]
 vakya = "vakya.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+vakya = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "showcase"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

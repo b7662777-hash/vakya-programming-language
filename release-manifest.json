@@ -1,0 +1,22 @@
+{
+    "version":  "0.1.0",
+    "name":  "Vakya Programming Language",
+    "architecture":  "x86-64",
+    "artifacts":  [
+                      {
+                          "size_bytes":  31096070,
+                          "sha256":  "FBF75A2E0C83ABE9B027D8DA415B5F6CFD5FBF542A4AD6302ADA5795DCF53F97",
+                          "file":  "dist/vakya.exe"
+                      },
+                      {
+                          "size_bytes":  30881684,
+                          "sha256":  "8E1809053591B9DB116E10C34CD001BF13636110A22363F9341F1A23CCCFC908",
+                          "file":  "dist/Vakya-v0.1.0-Windows-x64.zip"
+                      }
+                  ],
+    "performance":  {
+                        "cli_startup_ms":  3856
+                    },
+    "platform":  "windows",
+    "build_timestamp":  "2026-08-29 19:09:03"
+}

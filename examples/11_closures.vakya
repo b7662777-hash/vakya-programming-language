@@ -1,0 +1,14 @@
+// 11_closures.vakya — State-Capturing Lexical Closures
+karya make_accumulator(initial: sankhya) {
+    chara total = initial
+    karya add(amount: sankhya) -> sankhya {
+        total += amount
+        pratyavartaya total
+    }
+    pratyavartaya add
+}
+
+chara acc = make_accumulator(100)
+vada("Step 1:", acc(10))
+vada("Step 2:", acc(25))
+vada("Step 3:", acc(15))

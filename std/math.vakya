@@ -1,0 +1,33 @@
+// Vākya Standard Library — Math Module (गणित)
+
+dhruva PI = 3.141592653589793
+dhruva E = 2.718281828459045
+
+karya varga(x: dashamika) -> dashamika {
+    pratyavartaya x * x
+}
+
+karya ghana(x: dashamika) -> dashamika {
+    pratyavartaya x * x * x
+}
+
+karya parama_mana(x: dashamika) -> dashamika {
+    yadi x < 0.0 {
+        pratyavartaya -x
+    }
+    pratyavartaya x
+}
+
+karya adhika(a: dashamika, b: dashamika) -> dashamika {
+    yadi a > b {
+        pratyavartaya a
+    }
+    pratyavartaya b
+}
+
+karya alpa(a: dashamika, b: dashamika) -> dashamika {
+    yadi a < b {
+        pratyavartaya a
+    }
+    pratyavartaya b
+}

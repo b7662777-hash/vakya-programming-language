@@ -1,0 +1,9 @@
+// Vākya Standard Library — I/O Module (संवाद)
+
+karya vada_pankti(message: shabda) {
+    vada(message)
+}
+
+karya puchha_uttaram(prashna: shabda) -> shabda {
+    pratyavartaya puchha(prashna + " ")
+}

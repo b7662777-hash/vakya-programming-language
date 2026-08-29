@@ -1,0 +1,11 @@
+// 04_conditions.vakya — If/Else Branching
+chara score = 88
+yadi score >= 90 {
+    vada("Grade: A")
+} anyatha yadi score >= 80 {
+    vada("Grade: B")
+} anyatha yadi score >= 70 {
+    vada("Grade: C")
+} anyatha {
+    vada("Grade: D")
+}

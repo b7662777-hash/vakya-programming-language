@@ -1,0 +1,182 @@
+// Vākya Showcase Project 03: Mini Browser Core Logic
+// Implemented in pure, valid Vākya syntax.
+
+// 1. URL Parser: Splits protocol, host, and path
+karya parse_url(url: shabda) {
+    chara protocol = "http"
+    chara rest = url
+
+    // Check for protocol prefix
+    yadi lamba(url) > 8 {
+        chara prefix8 = ""
+        chara i = 0
+        yavat i < 8 {
+            prefix8 += url[i]
+            i += 1
+        }
+        yadi prefix8 == "https://" {
+            protocol = "https"
+            rest = ""
+            chara j = 8
+            yavat j < lamba(url) {
+                rest += url[j]
+                j += 1
+            }
+        }
+    }
+
+    yadi protocol != "https" evam lamba(url) > 7 {
+        chara prefix7 = ""
+        chara i = 0
+        yavat i < 7 {
+            prefix7 += url[i]
+            i += 1
+        }
+        yadi prefix7 == "http://" {
+            protocol = "http"
+            rest = ""
+            chara j = 7
+            yavat j < lamba(url) {
+                rest += url[j]
+                j += 1
+            }
+        }
+    }
+
+    yadi protocol != "https" evam protocol != "http" evam lamba(url) > 7 {
+        chara prefix7 = ""
+        chara i = 0
+        yavat i < 7 {
+            prefix7 += url[i]
+            i += 1
+        }
+        yadi prefix7 == "file://" {
+            protocol = "file"
+            rest = ""
+            chara j = 7
+            yavat j < lamba(url) {
+                rest += url[j]
+                j += 1
+            }
+        }
+    }
+
+    // Split host and path
+    chara host = ""
+    chara path = "/"
+    chara found_slash = asatya
+    chara k = 0
+    yavat k < lamba(rest) {
+        chara ch = rest[k]
+        yadi ch == "/" {
+            found_slash = satya
+        }
+
+        yadi na found_slash {
+            host += ch
+        } anyatha {
+            path += ch
+        }
+        k += 1
+    }
+
+    yadi lamba(path) > 1 evam path[0] == "/" evam path[1] == "/" {
+        // Normalize single leading slash
+        chara norm_path = ""
+        chara m = 1
+        yavat m < lamba(path) {
+            norm_path += path[m]
+            m += 1
+        }
+        path = norm_path
+    }
+
+    chara url_map = {
+        "protocol": protocol,
+        "host": host,
+        "path": path,
+        "raw": url
+    }
+    pratyavartaya url_map
+}
+
+// 2. Navigation History Stack Manager
+karya itihaasa_naya() {
+    chara h = {
+        "entries": [],
+        "current_index": -1
+    }
+    pratyavartaya h
+}
+
+karya itihaasa_push(h, url: shabda) {
+    chara entries = h["entries"]
+    chara curr = h["current_index"]
+
+    // Truncate any forward history
+    chara new_entries = []
+    chara i = 0
+    yavat i <= curr {
+        suchi_jodo(new_entries, entries[i])
+        i += 1
+    }
+    suchi_jodo(new_entries, url)
+    h["entries"] = new_entries
+    h["current_index"] = curr + 1
+    pratyavartaya h
+}
+
+karya itihaasa_pichhe(h) {
+    chara curr = h["current_index"]
+    yadi curr > 0 {
+        h["current_index"] = curr - 1
+        chara entries = h["entries"]
+        pratyavartaya entries[h["current_index"]]
+    }
+    pratyavartaya shunya
+}
+
+karya itihaasa_aage(h) {
+    chara curr = h["current_index"]
+    chara entries = h["entries"]
+    yadi curr + 1 < lamba(entries) {
+        h["current_index"] = curr + 1
+        pratyavartaya entries[h["current_index"]]
+    }
+    pratyavartaya shunya
+}
+
+// 3. Simple DOM Node Constructor
+karya dom_node(tag: shabda, text: shabda) {
+    chara node = {
+        "tag": tag,
+        "text": text,
+        "children": []
+    }
+    pratyavartaya node
+}
+
+// Self-Test Demonstration
+vada("=== VĀKYA MINI BROWSER ENGINE CORE ===")
+chara parsed = parse_url("https://example.com/index.html")
+vada("Protocol:", parsed["protocol"])
+vada("Host:", parsed["host"])
+vada("Path:", parsed["path"])
+
+vada("=== NAVIGATION HISTORY DEMO ===")
+chara hist = itihaasa_naya()
+itihaasa_push(hist, "https://example.com")
+itihaasa_push(hist, "https://example.com/about")
+itihaasa_push(hist, "https://example.com/contact")
+vada("Current Index:", hist["current_index"])
+vada("Back to:", itihaasa_pichhe(hist))
+vada("Back to:", itihaasa_pichhe(hist))
+vada("Forward to:", itihaasa_aage(hist))
+
+vada("=== DOM NODE DEMO ===")
+chara root = dom_node("body", "")
+chara h1 = dom_node("h1", "Namaste World")
+suchi_jodo(root["children"], h1)
+vada("DOM Root Tag:", root["tag"])
+vada("Child Tag:", root["children"][0]["tag"])
+vada("Child Text:", root["children"][0]["text"])

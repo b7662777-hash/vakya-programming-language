@@ -134,3 +134,8 @@ class IndexError(VakyaError):
 
 class ConstantError(VakyaError):
     """Errors related to reassignment or modification of constants."""
+
+
+class BorrowError(VakyaError):
+    """Errors related to ownership, move semantics, or reference borrowing."""
+

@@ -1,0 +1,14 @@
+// Vākya Showcase Project 01: Name Program
+// Demonstrates standard input, variables, string operations, functions, and output.
+
+karya abhivadana(naama: shabda) -> shabda {
+    pratyavartaya "Namaste, " + naama + "!"
+}
+
+chara naama = puchha("Tumhara naam kya hai? ")
+
+yadi lamba(shabda_trim(naama)) == 0 {
+    vada("Namaste, Mitra!")
+} anyatha {
+    vada(abhivadana(shabda_trim(naama)))
+}

@@ -1,0 +1,21 @@
+// 14_project.vakya — Student Grade Management System
+karya grade_student(name: shabda, score: sankhya) {
+    chara letter = "F"
+    yadi score >= 90 { letter = "A" }
+    anyatha yadi score >= 80 { letter = "B" }
+    anyatha yadi score >= 70 { letter = "C" }
+    anyatha { letter = "D" }
+
+    pratyavartaya {"name": name, "score": score, "grade": letter}
+}
+
+chara students = [
+    {"name": "Arjuna", "score": 95},
+    {"name": "Bhima", "score": 82},
+    {"name": "Nakula", "score": 74}
+]
+
+pratyekam s madhye students {
+    chara report = grade_student(s["name"], s["score"])
+    vada("Student:", report["name"], "| Score:", report["score"], "| Grade:", report["grade"])
+}

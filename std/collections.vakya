@@ -1,0 +1,28 @@
+// Vākya Standard Library — Collections Module (संग्रह)
+
+karya suchi_viparita(lst: suchi) -> suchi {
+    chara rev = []
+    chara i = lamba(lst) - 1
+    yavat i >= 0 {
+        suchi_jodo(rev, lst[i])
+        i -= 1
+    }
+    pratyavartaya rev
+}
+
+karya suchi_shodhaka(lst: suchi, target: sankhya) -> boolean {
+    pratyekam x madhye lst {
+        yadi x == target {
+            pratyavartaya satya
+        }
+    }
+    pratyavartaya asatya
+}
+
+karya suchi_yog(lst: suchi) -> sankhya {
+    chara total = 0
+    pratyekam x madhye lst {
+        total += x
+    }
+    pratyavartaya total
+}

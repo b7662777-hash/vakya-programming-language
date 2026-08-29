@@ -1,0 +1,65 @@
+// Vākya Showcase Project 02: Calculator Engine
+// Core arithmetic functions implemented in valid Vākya syntax.
+
+karya joda(a: dashamika, b: dashamika) -> dashamika {
+    pratyavartaya a + b
+}
+
+karya ghatana(a: dashamika, b: dashamika) -> dashamika {
+    pratyavartaya a - b
+}
+
+karya guna(a: dashamika, b: dashamika) -> dashamika {
+    pratyavartaya a * b
+}
+
+karya bhaga(a: dashamika, b: dashamika) {
+    yadi b == 0 {
+        vada("Dosha: Shunya se bhaga sambhava nahi hai (Division by Zero)")
+        pratyavartaya shunya
+    }
+    pratyavartaya a / b
+}
+
+karya sheshaphala(a: dashamika, b: dashamika) {
+    yadi b == 0 {
+        vada("Dosha: Shunya se modulo sambhava nahi hai")
+        pratyavartaya shunya
+    }
+    pratyavartaya a % b
+}
+
+karya ghata(a: dashamika, b: dashamika) -> dashamika {
+    pratyavartaya a ** b
+}
+
+karya ganana(a: dashamika, b: dashamika, kriya: shabda) {
+    yadi kriya == "+" {
+        pratyavartaya joda(a, b)
+    } anyatha yadi kriya == "-" {
+        pratyavartaya ghatana(a, b)
+    } anyatha yadi kriya == "*" {
+        pratyavartaya guna(a, b)
+    } anyatha yadi kriya == "/" {
+        pratyavartaya bhaga(a, b)
+    } anyatha yadi kriya == "%" {
+        pratyavartaya sheshaphala(a, b)
+    } anyatha yadi kriya == "**" {
+        pratyavartaya ghata(a, b)
+    } anyatha {
+        vada("Ajnata kriya: " + kriya)
+        pratyavartaya shunya
+    }
+}
+
+// Self-Test Demo
+vada("=== VĀKYA CALCULATOR ENGINE DEMO ===")
+vada("12.5 + 7.5 =", ganana(12.5, 7.5, "+"))
+vada("100.0 - 45.5 =", ganana(100.0, 45.5, "-"))
+vada("12.0 * 8.0 =", ganana(12.0, 8.0, "*"))
+vada("50.0 / 4.0 =", ganana(50.0, 4.0, "/"))
+vada("2.0 ** 8.0 =", ganana(2.0, 8.0, "**"))
+vada("29.0 % 5.0 =", ganana(29.0, 5.0, "%"))
+vada("Division by zero test:")
+chara div_zero = ganana(10.0, 0.0, "/")
+vada("Result:", div_zero)

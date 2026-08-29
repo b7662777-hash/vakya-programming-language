@@ -188,5 +188,11 @@ class FunctionDecl(Statement):
 
 
 @dataclass
+class ImportStatement(Statement):
+    module_name: str
+    alias: Optional[str] = None
+
+
+@dataclass
 class Program(ASTNode):
     statements: List[Statement]

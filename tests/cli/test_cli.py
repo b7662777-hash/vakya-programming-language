@@ -17,7 +17,13 @@ class TestCLI(unittest.TestCase):
     def test_cli_help(self):
         self.assertEqual(main(["help"]), 0)
         self.assertEqual(main(["--help"]), 0)
-        self.assertEqual(main([]), 0)
+        self.assertEqual(main(["-h"]), 0)
+
+    def test_cli_gui_dispatch(self):
+        from unittest.mock import patch
+        with patch("vakya.gui.launch_gui") as mock_gui:
+            self.assertEqual(main([]), 0)
+            mock_gui.assert_called_once()
 
     def test_cli_run_valid_file(self):
         file_path = os.path.join(self.examples_dir, "hello.vakya")
@@ -51,6 +57,35 @@ class TestCLI(unittest.TestCase):
             self.assertEqual(main(["fmt", temp_path, "--write"]), 0)
             # Now should pass --check
             self.assertEqual(main(["fmt", temp_path, "--check"]), 0)
+        finally:
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+
+    def test_cli_run_with_vm_engine(self):
+        file_path = os.path.join(self.examples_dir, "hello.vakya")
+        self.assertEqual(main(["run", file_path, "--engine=vm"]), 0)
+
+    def test_cli_run_with_interpreter_engine(self):
+        file_path = os.path.join(self.examples_dir, "hello.vakya")
+        self.assertEqual(main(["run", file_path, "--engine=interpreter"]), 0)
+
+    def test_cli_run_with_trace(self):
+        file_path = os.path.join(self.examples_dir, "hello.vakya")
+        self.assertEqual(main(["run", file_path, "--trace"]), 0)
+
+    def test_cli_disasm_valid_file(self):
+        file_path = os.path.join(self.examples_dir, "fibonacci.vakya")
+        self.assertEqual(main(["disasm", file_path]), 0)
+
+    def test_cli_disasm_nonexistent_file(self):
+        self.assertEqual(main(["disasm", "missing_disasm.vakya"]), 1)
+
+    def test_cli_disasm_syntax_error_file(self):
+        with tempfile.NamedTemporaryFile("w", suffix=".vakya", delete=False) as f:
+            f.write("yadi {")
+            temp_path = f.name
+        try:
+            self.assertEqual(main(["disasm", temp_path]), 1)
         finally:
             if os.path.exists(temp_path):
                 os.remove(temp_path)

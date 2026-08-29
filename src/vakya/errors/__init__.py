@@ -33,6 +33,11 @@ from .codes import (
     E405_UNARY_TYPE_MISMATCH,
     E406_ARGUMENT_COUNT_MISMATCH,
     E407_NOT_INDEXABLE,
+    E501_USE_AFTER_MOVE,
+    E502_MUTABLE_BORROW_CONFLICT,
+    E503_MULTIPLE_MUTABLE_BORROWS,
+    E504_DANGLING_REFERENCE,
+    E505_MUTATION_WHILE_BORROWED,
 )
 from .errors import (
     VakyaError,
@@ -44,6 +49,7 @@ from .errors import (
     ArgumentError,
     IndexError,
     ConstantError,
+    BorrowError,
 )
 
 __all__ = [
@@ -57,6 +63,7 @@ __all__ = [
     "ArgumentError",
     "IndexError",
     "ConstantError",
+    "BorrowError",
     "E001_INVALID_CHAR",
     "E002_UNTERMINATED_STRING",
     "E003_UNTERMINATED_COMMENT",
@@ -88,4 +95,9 @@ __all__ = [
     "E405_UNARY_TYPE_MISMATCH",
     "E406_ARGUMENT_COUNT_MISMATCH",
     "E407_NOT_INDEXABLE",
+    "E501_USE_AFTER_MOVE",
+    "E502_MUTABLE_BORROW_CONFLICT",
+    "E503_MULTIPLE_MUTABLE_BORROWS",
+    "E504_DANGLING_REFERENCE",
+    "E505_MUTATION_WHILE_BORROWED",
 ]

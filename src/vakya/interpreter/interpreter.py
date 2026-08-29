@@ -1,5 +1,6 @@
 """Tree-walking interpreter for Vākya AST."""
 
+import os
 import sys
 from typing import Any, List, Optional, TextIO
 from ..ast.nodes import (
@@ -18,6 +19,7 @@ from ..ast.nodes import (
     ContinueStatement,
     ReturnStatement,
     FunctionDecl,
+    ImportStatement,
     ExpressionStatement,
     BinaryExpr,
     UnaryExpr,
@@ -44,6 +46,7 @@ from ..errors import (
     E307_INVALID_PROPERTY,
     E406_ARGUMENT_COUNT_MISMATCH,
 )
+from ..modules.loader import ModuleLoader
 from .values import (
     VakyaFunction,
     VakyaBuiltin,
@@ -98,6 +101,7 @@ class Interpreter:
         # Global environment with standard library builtins
         self.global_env = Environment()
         self.current_env = self.global_env
+        self.module_loader = ModuleLoader()
         self._load_builtins()
 
     def _load_builtins(self) -> None:
@@ -132,6 +136,8 @@ class Interpreter:
             return self._exec_var_decl(stmt)
         elif isinstance(stmt, FunctionDecl):
             return self._exec_function_decl(stmt)
+        elif isinstance(stmt, ImportStatement):
+            return self._exec_import(stmt)
         elif isinstance(stmt, Assignment):
             return self._exec_assignment(stmt)
         elif isinstance(stmt, IfStatement):
@@ -152,6 +158,13 @@ class Interpreter:
         elif isinstance(stmt, ExpressionStatement):
             return self._evaluate(stmt.expression)
         return None
+
+    def _exec_import(self, stmt: ImportStatement) -> Any:
+        base_dir = os.path.dirname(self.filename) if self.filename and self.filename != "<anonymous>" else None
+        symbols = self.module_loader.load_module(stmt.module_name, base_dir=base_dir)
+        name = stmt.alias if stmt.alias else stmt.module_name
+        self.current_env.define(name, symbols, is_constant=True)
+        return symbols
 
     def _exec_var_decl(self, decl: VarDecl) -> Any:
         val = self._evaluate(decl.initializer) if decl.initializer is not None else None
@@ -459,6 +472,9 @@ class Interpreter:
                     length=expr.span.length,
                     source_code=self.source_code,
                 )
+            if isinstance(target, dict) and expr.member in target:
+                return target[expr.member]
+
             raise RuntimeError.from_info(
                 E307_INVALID_PROPERTY,
                 f"Unknown property '{expr.member}' on object of type '{vakya_typeof(target)}'",
@@ -749,6 +765,22 @@ class Interpreter:
                 return ret.value
             finally:
                 self.call_depth -= 1
+
+        if callable(callee):
+            try:
+                return callee(*arg_values)
+            except VakyaError:
+                raise
+            except Exception as ex:
+                raise RuntimeError.from_info(
+                    E306_RUNTIME_TYPE_ERROR,
+                    f"Error invoking function: {ex}",
+                    filename=self.filename,
+                    line=expr.span.line,
+                    column=expr.span.column,
+                    length=expr.span.length,
+                    source_code=self.source_code,
+                )
 
         raise RuntimeError.from_info(
             E305_NOT_CALLABLE,

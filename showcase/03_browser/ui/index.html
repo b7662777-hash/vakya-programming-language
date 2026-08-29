@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vākya Mini Browser (वाक्य जाल-दर्शक)</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="browser-window">
+    <!-- Browser Window Titlebar -->
+    <header class="window-titlebar">
+      <div class="window-controls">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="window-title">Vākya Mini Browser • वाक्य जाल-दर्शक (Showcase 03)</div>
+      <div class="window-badge">Educational Prototype</div>
+    </header>
+
+    <!-- Navigation & Address Toolbar -->
+    <div class="navigation-toolbar">
+      <div class="nav-buttons">
+        <button type="button" class="tool-btn" id="btnBack" title="Go Back" disabled>←</button>
+        <button type="button" class="tool-btn" id="btnForward" title="Go Forward" disabled>→</button>
+        <button type="button" class="tool-btn" id="btnReload" title="Reload Page">↻</button>
+      </div>
+
+      <div class="address-bar-wrapper">
+        <span class="protocol-icon" id="protocolIcon">🔒</span>
+        <input type="text" id="addressInput" class="address-input" value="https://example.com" placeholder="Enter URL or select sample below...">
+        <button type="button" class="go-btn" id="btnGo">Go</button>
+      </div>
+    </div>
+
+    <!-- Quick Bookmark Bar -->
+    <div class="bookmark-bar">
+      <span class="bookmark-label">Presets:</span>
+      <button type="button" class="preset-btn" data-url="https://example.com">example.com</button>
+      <button type="button" class="preset-btn" data-url="local:sample">Sample Page</button>
+      <button type="button" class="preset-btn" data-url="local:malformed">Malformed HTML Test</button>
+      <button type="button" class="preset-btn" data-url="local:vakya_docs">Vākya Features</button>
+    </div>
+
+    <!-- Main Viewport and Inspector Panels -->
+    <div class="browser-body">
+      <!-- Tab Navigation -->
+      <div class="view-tabs">
+        <button type="button" class="tab-btn active" data-tab="viewportTab">Page Render View</button>
+        <button type="button" class="tab-btn" data-tab="domTab">DOM Tree Inspector</button>
+        <button type="button" class="tab-btn" data-tab="sourceTab">HTML Source</button>
+        <button type="button" class="tab-btn" data-tab="archTab">Vākya Architecture</button>
+      </div>
+
+      <!-- Tab 1: Rendered Viewport -->
+      <div class="tab-content active" id="viewportTab">
+        <div class="rendered-page" id="renderedPage">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Tab 2: DOM Tree -->
+      <div class="tab-content" id="domTab">
+        <pre class="code-viewer" id="domTreeViewer"></pre>
+      </div>
+
+      <!-- Tab 3: Raw Source -->
+      <div class="tab-content" id="sourceTab">
+        <pre class="code-viewer" id="rawSourceViewer"></pre>
+      </div>
+
+      <!-- Tab 4: Architecture -->
+      <div class="tab-content" id="archTab">
+        <div class="arch-container">
+          <h2>Vākya Mini Browser Architecture</h2>
+          <table class="arch-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Implementation</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>URL Parser</strong></td>
+                <td><code>vakya/browser.vakya</code> (Protocol, Host, Path parser)</td>
+                <td><span class="badge green">Vākya Native</span></td>
+              </tr>
+              <tr>
+                <td><strong>History Stack</strong></td>
+                <td><code>vakya/browser.vakya</code> (Back, Forward, Truncation)</td>
+                <td><span class="badge green">Vākya Native</span></td>
+              </tr>
+              <tr>
+                <td><strong>DOM Node Model</strong></td>
+                <td><code>vakya/browser.vakya</code> (Tag, Attrs, Children Tree)</td>
+                <td><span class="badge green">Vākya Native</span></td>
+              </tr>
+              <tr>
+                <td><strong>HTTP Client</strong></td>
+                <td><code>browser/http_client.py</code> (Host Socket / HTTP Fetcher)</td>
+                <td><span class="badge blue">Host Runtime</span></td>
+              </tr>
+              <tr>
+                <td><strong>HTML Parser</strong></td>
+                <td><code>browser/engine.py</code> (Tag & Text Tokenizer)</td>
+                <td><span class="badge blue">Host Engine</span></td>
+              </tr>
+              <tr>
+                <td><strong>UI Viewport</strong></td>
+                <td><code>ui/</code> (DOM Render Pipeline)</td>
+                <td><span class="badge purple">Host UI</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <footer class="browser-statusbar">
+      <div class="status-left">
+        <span class="status-pill status-ready" id="statusIndicator">Ready</span>
+        <span id="statusMessage">200 OK</span>
+      </div>
+      <div class="status-right">
+        <span id="nodeCount">DOM Nodes: 0</span>
+        <span id="historyState">History: 1/1</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

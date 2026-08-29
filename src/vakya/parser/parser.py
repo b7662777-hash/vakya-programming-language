@@ -17,6 +17,7 @@ from ..ast.nodes import (
     ContinueStatement,
     ReturnStatement,
     FunctionDecl,
+    ImportStatement,
     Param,
     ExpressionStatement,
     BinaryExpr,
@@ -116,8 +117,37 @@ class Parser:
             return self._var_declaration(is_constant=True)
         elif tok.type == TokenType.KARYA:
             return self._function_declaration()
+        elif tok.type == TokenType.AAYAT:
+            return self._import_statement()
         else:
             return self._statement()
+
+    def _import_statement(self) -> ImportStatement:
+        aayat_tok = self._advance()
+        tok = self._peek()
+        if tok.type in (TokenType.IDENTIFIER, TokenType.STRING):
+            mod_tok = self._advance()
+            module_name = str(mod_tok.value)
+        else:
+            raise ParseError.from_info(
+                E202_EXPECTED_TOKEN,
+                f"Expected module identifier after 'aayat', found {tok.value!r}",
+                filename=self.filename,
+                line=tok.line,
+                column=tok.column,
+                length=tok.length,
+                source_code=self.source_code,
+                help_text="Specify module name e.g. 'aayat math' or 'aayat strings'",
+            )
+
+        alias = None
+        if self._check(TokenType.IDENTIFIER) and self._peek().value == "yatha":
+            self._advance()
+            alias_tok = self._consume(TokenType.IDENTIFIER, E202_EXPECTED_TOKEN, "Expected alias identifier after 'yatha'")
+            alias = str(alias_tok.value)
+
+        last_tok = self.tokens[self.pos - 1] if self.pos > 0 else aayat_tok
+        return ImportStatement(module_name=module_name, alias=alias, span=Span.between(Span.from_token(aayat_tok), Span.from_token(last_tok)))
 
     def _var_declaration(self, is_constant: bool) -> VarDecl:
         decl_tok = self._advance()  # chara or dhruva

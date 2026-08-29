@@ -51,3 +51,11 @@ E404_OPERATOR_TYPE_MISMATCH = ErrorInfo("E404", "Incompatible operand types", "T
 E405_UNARY_TYPE_MISMATCH = ErrorInfo("E405", "Incompatible operand type for unary operator", "Check the operand type.")
 E406_ARGUMENT_COUNT_MISMATCH = ErrorInfo("E406", "Incorrect number of arguments", "Pass the exact number of arguments required by the function signature.")
 E407_NOT_INDEXABLE = ErrorInfo("E407", "Type is not indexable", "Indexing with '[]' is only supported on 'suchi', 'naksha', and 'shabda'.")
+
+# Memory Safety & Borrow Checking Errors (E501 - E599)
+E501_USE_AFTER_MOVE = ErrorInfo("E501", "Use of moved value", "Cannot access a variable after its ownership has been transferred.")
+E502_MUTABLE_BORROW_CONFLICT = ErrorInfo("E502", "Cannot borrow as mutable while shared borrows active", "End all shared immutable borrows before creating an exclusive mutable borrow.")
+E503_MULTIPLE_MUTABLE_BORROWS = ErrorInfo("E503", "Multiple mutable borrows", "Cannot borrow a variable as mutable more than once at the same time.")
+E504_DANGLING_REFERENCE = ErrorInfo("E504", "Returning reference to local variable", "Cannot return a reference to a variable allocated on the local stack frame.")
+E505_MUTATION_WHILE_BORROWED = ErrorInfo("E505", "Mutation of target while borrowed", "Cannot mutate an owned resource while active borrows exist.")
+

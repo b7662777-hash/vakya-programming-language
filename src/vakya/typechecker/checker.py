@@ -17,6 +17,7 @@ from ..ast.nodes import (
     ContinueStatement,
     ReturnStatement,
     FunctionDecl,
+    ImportStatement,
     Param,
     ExpressionStatement,
     BinaryExpr,
@@ -182,6 +183,9 @@ class TypeChecker:
                     length=stmt.span.length,
                     source_code=self.source_code,
                 )
+        elif isinstance(stmt, ImportStatement):
+            name = stmt.alias if stmt.alias else stmt.module_name
+            self.current_env.define(name, TYPE_UNKNOWN, True, stmt.span)
         elif isinstance(stmt, ReturnStatement):
             self._check_return(stmt)
         elif isinstance(stmt, Block):

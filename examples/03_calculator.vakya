@@ -1,0 +1,9 @@
+// 03_calculator.vakya — Arithmetic & Power
+chara a = 20
+chara b = 5
+vada("Yog (Add):", a + b)
+vada("Ghatana (Sub):", a - b)
+vada("Guna (Mul):", a * b)
+vada("Bhaga (Div):", a / b)
+vada("Varga (Power):", a ** 2)
+vada("Shesha (Mod):", a % 3)

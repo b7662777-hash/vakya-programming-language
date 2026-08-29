@@ -1,43 +1,49 @@
-# Vākya Type System & Inference
+# Type System & Type Inference in Vākya
 
-## Supported Primitive Types
+Vākya features static type checking with local type inference.
 
-| Type Name | Sanskrit Meaning | Description | Example Literals |
+---
+
+## 1. Primitive Types
+
+| Type Identifier | Sanskrit Etymology | Description | Literals / Examples |
 | :--- | :--- | :--- | :--- |
-| `sankhya` | Number / Count | Integer number | `0`, `42`, `-10`, `1000000` |
-| `dashamika` | Decimal | Floating-point number | `3.14`, `0.5`, `-12.75` |
-| `shabda` | Word / Sound | String | `"Goku"`, `"Namaste\nWorld"` |
-| `boolean` | Boolean truth value | Boolean | `satya` (true), `asatya` (false) |
-| `suchi` | List / Index | Ordered array | `[1, 2, 3]`, `["a", "b"]` |
-| `naksha` | Map / Chart | Key-value dictionary | `{"name": "Goku", "age": 16}` |
-| `shunya` | Void / Zero | Null / Nil value | `shunya` |
+| `sankhya` | संख्या (Number) | 64-bit signed integer | `0`, `42`, `-10` |
+| `dashamika` | दशमिक (Decimal) | Double precision float | `3.14`, `0.0`, `10.5` |
+| `shabda` | शब्द (Word/Sound) | UTF-8 encoded text string | `"Namaste"`, `"Vākya"` |
+| `boolean` | बूलियन (Truth) | Logical truth value | `satya` (true), `asatya` (false) |
+| `suchi` | सूची (List/Index) | Dynamic array collection | `[1, 2, 3]`, `["a", "b"]` |
+| `naksha` | नक्शा (Map/Chart) | Key-value hash map | `{"k1": 100, "k2": 200}` |
+| `shunya` | शून्य (Void/Null) | Absence of a value | `shunya` |
 
-## Type Annotations
+---
 
-Type annotations are optional on variable and constant declarations:
+## 2. Type Inference
+
+When type annotations are omitted, Vākya's `TypeChecker` infers the type from the initializer expression:
 
 ```vakya
-chara age: sankhya = 16
-dhruva pi: dashamika = 3.14159
-chara name: shabda = "Goku"
-chara active: boolean = satya
+chara age = 25              // Inferred as sankhya
+chara pi = 3.14             // Inferred as dashamika
+chara title = "Vākya"       // Inferred as shabda
+chara is_active = satya     // Inferred as boolean
 ```
 
-## Type Inference
-
-When type annotations are omitted, Vākya's static analyzer infers the type from the initializer expression:
+Once a variable's type is established (either via explicit annotation or inference), assigning a value of an incompatible type causes a static type error (`[E401]`):
 
 ```vakya
-chara age = 16       // Inferred as sankhya
-chara pi = 3.14      // Inferred as dashamika
-chara name = "Goku"  // Inferred as shabda
+chara count = 10
+count = "ten" // Error [E401]: Type mismatch: cannot assign 'shabda' to variable of type 'sankhya'
 ```
 
-## Static Validation
+---
 
-The static typechecker detects type mismatches prior to program execution:
+## 3. Function Signatures
+
+Function parameters and return types can be typed:
 
 ```vakya
-chara x: sankhya = "hello"
-// Type mismatch: Cannot assign shabda to variable x of type sankhya (Error [E401])
+karya bhaga(a: dashamika, b: dashamika) -> dashamika {
+    pratyavartaya a / b
+}
 ```

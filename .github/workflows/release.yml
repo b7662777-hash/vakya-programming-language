@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build & Publish Release Assets
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Build Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run Build & Verification Pipeline
+        run: |
+          $tag = $env:GITHUB_REF_NAME.TrimStart('v')
+          powershell -ExecutionPolicy Bypass -File .\scripts\build_windows.ps1 -Version $tag
+
+      - name: Calculate SHA-256 Checksums
+        id: checksums
+        run: |
+          $exeHash = (Get-FileHash -Path "dist\vakya.exe" -Algorithm SHA256).Hash
+          $zipHash = (Get-FileHash -Path (Get-Item dist\*.zip).FullName -Algorithm SHA256).Hash
+          Write-Host "vakya.exe SHA256: $exeHash"
+          Write-Host "ZIP SHA256:       $zipHash"
+          "EXE_HASH=$exeHash" >> $env:GITHUB_ENV
+          "ZIP_HASH=$zipHash" >> $env:GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Vākya ${{ github.ref_name }}"
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            dist/vakya.exe
+            dist/*.zip
+            release-manifest.json

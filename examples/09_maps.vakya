@@ -1,0 +1,8 @@
+// 09_maps.vakya — Map Operations & Iteration
+chara user = {"name": "Goku", "power": 9001}
+user["title"] = "Super Saiyan"
+vada("User name:", user["name"])
+vada("Total fields:", user.length)
+pratyekam k madhye user {
+    vada(k, "->", user[k])
+}

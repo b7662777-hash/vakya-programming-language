@@ -1,0 +1,13 @@
+// Vākya Standard Library — Time Module (काल)
+
+dhruva NIMESHA_SECOND = 1
+dhruva GHANDA_MINUTE = 60
+dhruva DINA_HOUR = 3600
+
+karya convert_minutes_to_seconds(minutes: sankhya) -> sankhya {
+    pratyavartaya minutes * 60
+}
+
+karya convert_hours_to_seconds(hours: sankhya) -> sankhya {
+    pratyavartaya hours * 3600
+}

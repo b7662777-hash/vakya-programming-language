@@ -1,65 +1,55 @@
-# Vākya Functions & Closures
+# Functions and Closures in Vākya
 
-## Function Declarations (`karya`)
+Functions in Vākya are declared with `karya` (कार्य, meaning *action/function*) and return values with `pratyavartaya` (प्रत्यावर्तय, meaning *return*).
 
-Functions are declared with the `karya` keyword.
+---
 
-### Basic Functions
+## 1. Defining Functions
+
 ```vakya
-karya greet() {
-    vada("Namaste!")
-}
-
-greet()
-```
-
-### Parameterized Functions with Return (`pratyavartaya`)
-```vakya
-karya add(a, b) {
+karya yog(a: sankhya, b: sankhya) -> sankhya {
     pratyavartaya a + b
 }
 
-chara result = add(10, 20)
-vada(result) // 30
+chara result = yog(10, 20)
+vada(result) // Prints: 30
 ```
 
-### Type-Annotated Signatures
+---
+
+## 2. Top-Level Function Hoisting
+
+Top-level functions are automatically hoisted during compilation. You can call a function before its lexical declaration in the source file, enabling seamless mutual recursion:
+
 ```vakya
-karya multiply(a: sankhya, b: sankhya) -> sankhya {
-    pratyavartaya a * b
+karya is_even(n: sankhya) -> boolean {
+    yadi n == 0 { pratyavartaya satya }
+    pratyavartaya is_odd(n - 1)
+}
+
+karya is_odd(n: sankhya) -> boolean {
+    yadi n == 0 { pratyavartaya asatya }
+    pratyavartaya is_even(n - 1)
 }
 ```
 
-### Implicit Default Return
-If execution reaches the end of a function without executing `pratyavartaya`, the function returns `shunya` (null).
+---
 
-## Recursion
+## 3. First-Class Functions & Lexical Closures
 
-Vākya fully supports recursive functions with call stack protection:
+Functions can capture variables from their enclosing lexical scopes:
 
 ```vakya
-karya factorial(n: sankhya) -> sankhya {
-    yadi n <= 1 {
-        pratyavartaya 1
+karya make_counter(start: sankhya) {
+    chara count = start
+    karya increment() -> sankhya {
+        count += 1
+        pratyavartaya count
     }
-    pratyavartaya n * factorial(n - 1)
+    pratyavartaya increment
 }
 
-vada(factorial(5)) // 120
-```
-
-## Closures & First-Class Functions
-
-Functions can be passed as values, returned from other functions, and capture their lexical scope:
-
-```vakya
-karya make_adder(x: sankhya) {
-    karya adder(y: sankhya) -> sankhya {
-        pratyavartaya x + y
-    }
-    pratyavartaya adder
-}
-
-chara add5 = make_adder(5)
-vada(add5(10)) // 15
+chara c1 = make_counter(0)
+vada(c1()) // Prints: 1
+vada(c1()) // Prints: 2
 ```

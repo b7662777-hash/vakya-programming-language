@@ -1,0 +1,6 @@
+// 10_strings.vakya — String Builtins & Repetition
+chara text = "  sanskrit language  "
+vada("Trimmed:", shabda_trim(text))
+vada("Upper:", shabda_bada(shabda_trim(text)))
+vada("Lower:", shabda_chhota("VAKYA"))
+vada("Repetition:", "om " * 3)

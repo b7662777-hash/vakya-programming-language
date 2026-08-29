@@ -1,0 +1,13 @@
+// 05_loops.vakya — While and For-each Loops
+chara i = 0
+yavat i < 5 {
+    i += 1
+    yadi i == 2 { agaccha }
+    yadi i == 4 { virama }
+    vada("While loop step:", i)
+}
+
+chara colors = ["Rakta", "Pita", "Nila"]
+pratyekam c madhye colors {
+    vada("Color:", c)
+}

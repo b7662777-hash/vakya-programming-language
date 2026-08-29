@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vākya Calculator (वाक्य गणक)</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-icon">ॐ</span>
+        <div class="logo-text">
+          <h1>Vākya Calculator</h1>
+          <p class="subtitle">वाक्य गणक यंत्र • Showcase Project 02</p>
+        </div>
+      </div>
+      <div class="engine-badge">
+        <span class="status-dot"></span>
+        <span>Vākya Logic Architecture</span>
+      </div>
+    </header>
+
+    <main class="calculator-card">
+      <div class="display-container">
+        <div class="expression-line" id="expressionDisplay" aria-live="polite"></div>
+        <div class="result-line" id="resultDisplay" aria-live="polite">0</div>
+      </div>
+
+      <div class="keypad">
+        <!-- Row 1 -->
+        <button type="button" class="btn btn-action" id="btnClear" title="Clear all (Escape)">C</button>
+        <button type="button" class="btn btn-action" id="btnBackspace" title="Backspace (Backspace)">⌫</button>
+        <button type="button" class="btn btn-operator" data-op="%" title="Modulo (%)">%</button>
+        <button type="button" class="btn btn-operator" data-op="/" title="Division (/)">÷</button>
+
+        <!-- Row 2 -->
+        <button type="button" class="btn btn-num" data-num="7">7</button>
+        <button type="button" class="btn btn-num" data-num="8">8</button>
+        <button type="button" class="btn btn-num" data-num="9">9</button>
+        <button type="button" class="btn btn-operator" data-op="*" title="Multiplication (*)">×</button>
+
+        <!-- Row 3 -->
+        <button type="button" class="btn btn-num" data-num="4">4</button>
+        <button type="button" class="btn btn-num" data-num="5">5</button>
+        <button type="button" class="btn btn-num" data-num="6">6</button>
+        <button type="button" class="btn btn-operator" data-op="-" title="Subtraction (-)">−</button>
+
+        <!-- Row 4 -->
+        <button type="button" class="btn btn-num" data-num="1">1</button>
+        <button type="button" class="btn btn-num" data-num="2">2</button>
+        <button type="button" class="btn btn-num" data-num="3">3</button>
+        <button type="button" class="btn btn-operator" data-op="+" title="Addition (+)">+</button>
+
+        <!-- Row 5 -->
+        <button type="button" class="btn btn-num btn-zero" data-num="0">0</button>
+        <button type="button" class="btn btn-num" id="btnDecimal" data-num=".">.</button>
+        <button type="button" class="btn btn-operator" data-op="**" title="Power (**)">xʸ</button>
+        <button type="button" class="btn btn-equals" id="btnEquals" title="Equals (= or Enter)">=</button>
+      </div>
+
+      <div class="info-footer">
+        <div class="term-mapping">
+          <span><strong>joda (+)</strong></span>
+          <span><strong>ghatana (−)</strong></span>
+          <span><strong>guna (×)</strong></span>
+          <span><strong>bhaga (÷)</strong></span>
+          <span><strong>ghata (xʸ)</strong></span>
+        </div>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <p>Calculations mirror the exact semantics of <code>vakya/calculator.vakya</code>.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

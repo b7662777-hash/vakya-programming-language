@@ -1,0 +1,8 @@
+// 12_fibonacci.vakya — Fibonacci Sequence
+karya fib(n: sankhya) -> sankhya {
+    yadi n <= 0 { pratyavartaya 0 }
+    yadi n == 1 { pratyavartaya 1 }
+    pratyavartaya fib(n - 1) + fib(n - 2)
+}
+
+vada("Fibonacci(8):", fib(8))

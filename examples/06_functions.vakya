@@ -1,0 +1,8 @@
+// 06_functions.vakya — Typed Functions & Returns
+karya kshetraphala(lamba: dashamika, chauda: dashamika) -> dashamika {
+    pratyavartaya lamba * chauda
+}
+
+dhruva l: dashamika = 10.5
+dhruva w: dashamika = 4.0
+vada("Area:", kshetraphala(l, w))

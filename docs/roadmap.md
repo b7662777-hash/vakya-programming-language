@@ -22,9 +22,14 @@
 
 ---
 
-## V2 — Bytecode VM & Capability Security
-- [ ] Typed Intermediate Representation (Typed IR)
-- [ ] Custom Stack-Based Bytecode VM
+## V2.0 Alpha (Current) — Bytecode Virtual Machine Architecture
+- [x] Stack-based Bytecode Virtual Machine (`VirtualMachine`, `ValueStack`, `CallFrame`)
+- [x] AST-to-Bytecode Compiler (`BytecodeCompiler`, `Chunk`, `Instruction`, `OpCode`)
+- [x] Upvalue-based Lexical Closures & mutable environments
+- [x] Bytecode Disassembler CLI (`vakya disasm <file.vakya>`)
+- [x] Dual-engine execution support (`--engine=vm` (default), `--engine=interpreter`)
+- [x] Execution tracing (`--trace`)
+- [x] Differential Conformance Test Suite (>300 tests)
 - [ ] Module system (`aayat`) and package manager
 - [ ] Capability-based security model (`anumati filesystem.read`, `anumati network.connect`)
 - [ ] Structured concurrency primitives

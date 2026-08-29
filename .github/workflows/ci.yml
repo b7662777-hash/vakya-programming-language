@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }} - Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.12", "3.13"]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Package and Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run Core Test Suite (448 tests)
+        run: |
+          python -m unittest discover -s tests -p "test_*.py"
+
+      - name: Run Showcase Test Suite
+        run: |
+          python -m unittest discover -s showcase/01_name_program/tests
+          python -m unittest discover -s showcase/02_calculator/tests
+          python -m unittest discover -s showcase/03_browser/tests
+
+      - name: Run CLI Smoke Verification
+        run: |
+          vakya --version
+          vakya doctor
+          vakya run examples/01_hello.vakya
+          vakya run examples/13_factorial.vakya
+          vakya check examples/01_hello.vakya
+          vakya fmt examples/01_hello.vakya --check

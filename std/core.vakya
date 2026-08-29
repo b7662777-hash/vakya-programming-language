@@ -1,0 +1,11 @@
+// Vākya Standard Library — Core Module (मूल)
+
+karya nirdharaya(condition: boolean, message: shabda) {
+    yadi na condition {
+        vada("Nirdharana Asatya (Assertion Failed):", message)
+    }
+}
+
+karya parivartana_shabda(val: sankhya) -> shabda {
+    pratyavartaya "" + val
+}

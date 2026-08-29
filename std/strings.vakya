@@ -1,0 +1,24 @@
+// Vākya Standard Library — Strings Module (शब्द)
+
+karya jodo_sarva(items: suchi, delimiter: shabda) -> shabda {
+    chara result = ""
+    chara i = 0
+    yavat i < lamba(items) {
+        yadi i > 0 {
+            result += delimiter
+        }
+        result += items[i]
+        i += 1
+    }
+    pratyavartaya result
+}
+
+karya shabda_viparita(s: shabda) -> shabda {
+    chara rev = ""
+    chara i = lamba(s) - 1
+    yavat i >= 0 {
+        rev += s[i]
+        i -= 1
+    }
+    pratyavartaya rev
+}

@@ -1,0 +1,7 @@
+// 08_arrays.vakya — List Operations & Builtins
+chara items = [10, 20, 30]
+suchi_jodo(items, 40)
+vada("Items:", items)
+vada("Length:", items.length)
+vada("Removed:", suchi_hatao(items, 0))
+vada("After removal:", items)
