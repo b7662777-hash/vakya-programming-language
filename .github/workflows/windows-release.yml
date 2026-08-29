@@ -47,7 +47,7 @@ jobs:
           if (-not (Test-Path "release-manifest.json")) { throw "release-manifest.json is missing" }
 
       - name: Upload Release Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Vakya-Windows-x64
           path: |
