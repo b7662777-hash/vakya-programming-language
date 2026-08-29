@@ -1,0 +1,9 @@
+chara naam: shabda = "Goku"
+chara age: sankhya = 16
+dhruva active: boolean = satya
+vada("Namaste " + naam)
+yadi age >= 18 {
+    vada(naam + " is an adult")
+} anyatha {
+    vada(naam + " is a minor")
+}

@@ -1,0 +1,31 @@
+// Vākya Example: Basic Calculator & Arithmetic
+
+karya yog(a: sankhya, b: sankhya) -> sankhya {
+    pratyavartaya a + b
+}
+
+karya ghatana(a: sankhya, b: sankhya) -> sankhya {
+    pratyavartaya a - b
+}
+
+karya guna(a: sankhya, b: sankhya) -> sankhya {
+    pratyavartaya a * b
+}
+
+karya bhaga(a: sankhya, b: sankhya) -> dashamika {
+    pratyavartaya a / b
+}
+
+karya varga(x: sankhya) -> sankhya {
+    pratyavartaya x ** 2
+}
+
+chara x = 20
+chara y = 5
+
+vada("Calculator Operations with " + x + " and " + y + ":")
+vada("Yog (Addition):", yog(x, y))
+vada("Ghatana (Subtraction):", ghatana(x, y))
+vada("Guna (Multiplication):", guna(x, y))
+vada("Bhaga (Division):", bhaga(x, y))
+vada("Varga of x (Power):", varga(x))

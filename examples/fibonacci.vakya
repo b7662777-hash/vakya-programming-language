@@ -1,0 +1,27 @@
+// Vākya Example: Fibonacci Sequence (Recursive & Iterative)
+
+karya fibonacci(n: sankhya) -> sankhya {
+    yadi n <= 0 {
+        pratyavartaya 0
+    }
+    yadi n == 1 {
+        pratyavartaya 1
+    }
+    pratyavartaya fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+vada("Recursive Fibonacci of 7:")
+vada(fibonacci(7))
+
+vada("Iterative Fibonacci sequence (first 8 terms):")
+chara a = 0
+chara b = 1
+chara count = 0
+
+yavat count < 8 {
+    vada("Term:", a)
+    chara temp = a + b
+    a = b
+    b = temp
+    count += 1
+}

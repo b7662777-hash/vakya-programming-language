@@ -1,0 +1,30 @@
+// Vākya Example: Loops (yavat, pratyekam, virama, agaccha)
+
+vada("=== 1. While loop (yavat) with continue (agaccha) ===")
+chara i = 0
+yavat i < 6 {
+    i += 1
+    yadi i == 3 {
+        vada("Skipping 3")
+        agaccha
+    }
+    vada("Value:", i)
+}
+
+vada("=== 2. While loop with break (virama) ===")
+chara k = 1
+yavat satya {
+    vada("Loop step:", k)
+    yadi k >= 3 {
+        vada("Breaking out")
+        virama
+    }
+    k += 1
+}
+
+vada("=== 3. For-each loop (pratyekam ... madhye) ===")
+chara warriors = ["Goku", "Vegeta", "Gohan"]
+
+pratyekam warrior madhye warriors {
+    vada("Warrior: " + warrior)
+}

@@ -1,0 +1,39 @@
+// Vākya Example: Functions, Scopes & Closures
+
+// 1. Zero arguments
+karya namaste() {
+    vada("Namaste, World!")
+}
+
+namaste()
+
+// 2. Single argument
+karya greet(naam: shabda) {
+    vada("Namaste, " + naam + "!")
+}
+
+greet("Arjuna")
+
+// 3. Multiple arguments and return
+karya max_of(a: sankhya, b: sankhya) -> sankhya {
+    yadi a > b {
+        pratyavartaya a
+    } anyatha {
+        pratyavartaya b
+    }
+}
+
+vada("Max of 42 and 100:", max_of(42, 100))
+
+// 4. Lexical Scoping & Closures
+chara global_multiplier = 3
+
+karya make_multiplier(factor: sankhya) {
+    karya multiply(val: sankhya) -> sankhya {
+        pratyavartaya val * factor
+    }
+    pratyavartaya multiply
+}
+
+chara double_fn = make_multiplier(2)
+vada("Double of 15:", double_fn(15))

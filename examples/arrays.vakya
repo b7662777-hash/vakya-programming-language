@@ -1,0 +1,20 @@
+// Vākya Example: Arrays (suchi) and Array Operations
+
+chara numbers = [10, 20, 30, 40, 50]
+
+vada("Initial list:", numbers)
+vada("First element:", numbers[0])
+vada("Length via property:", numbers.length)
+vada("Length via builtin:", lamba(numbers))
+
+// Mutation
+numbers[1] = 99
+vada("After modifying index 1:", numbers)
+
+// Builtins: suchi_jodo and suchi_hatao
+suchi_jodo(numbers, 60)
+vada("After suchi_jodo(numbers, 60):", numbers)
+
+chara removed = suchi_hatao(numbers, 0)
+vada("Removed element:", removed)
+vada("List after suchi_hatao:", numbers)

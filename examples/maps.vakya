@@ -1,0 +1,25 @@
+// Vākya Example: Maps (naksha)
+
+chara user = {
+    "name": "Goku",
+    "age": 16,
+    "power": 9001
+}
+
+vada("User map:", user)
+vada("Name:", user["name"])
+vada("Age:", user["age"])
+vada("Number of keys:", user.length)
+
+// Updating a value
+user["age"] = 17
+vada("Updated age:", user["age"])
+
+// Adding a new entry
+user["status"] = "Super Saiyan"
+vada("Updated user:", user)
+
+// Iterating over keys
+pratyekam key madhye user {
+    vada(key + " -> " + user[key])
+}

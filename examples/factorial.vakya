@@ -1,0 +1,14 @@
+// Vākya Example: Factorial with Type Annotations
+
+karya factorial(n: sankhya) -> sankhya {
+    yadi n <= 1 {
+        pratyavartaya 1
+    }
+
+    pratyavartaya n * factorial(n - 1)
+}
+
+chara result = factorial(5)
+
+vada("Factorial:")
+vada(result)
